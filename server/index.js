@@ -1,44 +1,38 @@
-const dbConfig = require("../db.config.js");
-const Sequelize = require("sequelize");
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const decodeIDToken = require("./utility/authenticateToken");
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: false,
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
-  },
+global.__basedir = __dirname;
+
+const app = express();
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
+// parse requests of content-type - application/json
+app.use(express.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+app.use(decodeIDToken);
+
+const db = require("./models");
+
+// for dev only:
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
 });
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.recipes = require("./recipe.model.js")(sequelize, Sequelize);
-db.comments = require("./comment.model.js")(sequelize, Sequelize);
-db.tag = require("./tag.model.js")(sequelize, Sequelize);
-db.images = require("./image.model.js")(sequelize, Sequelize);
+// db.sequelize.sync();
 
-db.tag.belongsToMany(db.recipes, {
-  through: "recipe_tag",
-});
-db.recipes.belongsToMany(db.tag, {
-  through: "recipe_tag",
-});
+require("./routes/recipe.routes.js")(app);
 
-//todo remove comments and implement voting
-db.recipes.hasMany(db.comments, { as: "comments" });
-db.comments.belongsTo(db.recipes, {
-  foreignKey: "recipeId",
-  as: "recipe",
-});
+// set port, listen for requests
+const PORT = process.env.PORT || 5000;
 
-db.recipes.hasMany(db.images, { as: "images" });
-db.images.belongsTo(db.recipes, {
-  foreignKey: "recipeId",
-  as: "images",
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
-
-module.exports = db;
