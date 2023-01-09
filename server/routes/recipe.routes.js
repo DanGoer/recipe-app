@@ -1,3 +1,5 @@
+//Router for all controller functionalities
+
 module.exports = (app) => {
   const recipes = require("../controllers/recipe.controller.js");
 
@@ -9,20 +11,20 @@ module.exports = (app) => {
   // Retrieve all recipes
   router.get("/", recipes.findAll);
 
-  // Retrieve all published recipes
-  router.get("/published", recipes.findAllPublished);
+  // Get facts
+  router.get("/facts", recipes.facts);
 
-  // Retrieve a single recipe with id
-  router.get("/:id", recipes.findOne);
+  // Retrieve last recipe
+  router.get("/last", recipes.findLast);
 
-  // Update a recipe with id
-  router.put("/:id", recipes.update);
+  // Retrieve a single recipe per title
+  router.get("/:title", recipes.findOne);
+
+  // Update a recipe with title
+  router.put("/:title", recipes.update);
 
   // Delete a recipe with id
   router.delete("/:id", recipes.delete);
-
-  // Delete all recipes
-  router.delete("/", recipes.deleteAll);
 
   app.use("/api/recipes", router);
 };

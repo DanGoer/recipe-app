@@ -1,26 +1,31 @@
+//Wrapper for Context etc and root file
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/home/Home";
-import Recipes from "./pages/recipes/Recipes";
-import SingleRecipe from "./pages/singlerecipe/SingleRecipe";
-import NotFound from "./pages/notfound/NotFound";
+import "./index.css";
+
+import App from "./App";
+
+import { ThemeProvider } from "./utility/darkmode/ThemeContext";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./utility/AuthContext";
+import { RecipesProvider } from "./utility/RecipesContext";
+import { RegProvider } from "./utility/RegisterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="recipes" element={<Recipes />} />
-          <Route path="recipe:singlerecipeId" element={<SingleRecipe />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <AuthProvider>
+        <RecipesProvider>
+          <RegProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </RegProvider>
+        </RecipesProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

@@ -8,6 +8,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
+    font-size: 22px;
+    font-family: "Poppins", sans-serif;
   }
 
   *,
@@ -36,18 +38,76 @@
     font: inherit;
   }
 
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    overflow-wrap: break-word;
-  }
-
   /* CSS reset end*/
+
+  /*font sizes for headings*/
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.17em;
+  }
+  h4 {
+    font-size: 1em;
+  }
+  h5 {
+    font-size: 0.83em;
+  }
+  h6 {
+    font-size: 0.67em;
+  }
+  /*font sizes for headings end*/
 }
 
 @layer components {
+  /* Style for buttons*/
+
+  .slider-button {
+    -webkit-appearance: none;
+    @apply w-72 h-8 border-2 rounded-xl overflow-hidden bg-gradient-to-r
+     from-primaryLight dark:from-primaryDark via-yellow-300 dark:via-yellow-300 to-errorLight dark:to-errorDarkContainer cursor-pointer
+     border-lightOutline dark:border-darkOutline shadow-lg;
+  }
+
+  .slider-button::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    @apply h-6 w-6 rounded-xl bg-white
+     border-lightOutline dark:border-darkOutline cursor-pointer shadow-lg;
+  }
+
+  /* Style for buttons end*/
+
+  /* Overall styles */
+
+  .font-reset {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .hr-setup {
+    @apply border border-lightVariantSurfaceOn dark:border-darkVariantSurfaceOn;
+  }
+
+  .hr-setup {
+    height: 30px;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    @apply border-backgroundLightOn dark:border-backgroundDarkOn;
+  }
+
+  .hr-setup:before {
+    content: "";
+    display: block;
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+    @apply border-backgroundLightOn dark:border-backgroundDarkOn;
+  }
+
+  /* Overall styles end */
 }
