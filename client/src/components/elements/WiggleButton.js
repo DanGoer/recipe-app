@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 function WiggleButton({ handler, viewBox, svg, label }) {
   return (
     <motion.button
+      type="button"
       aria-label={label}
       onClick={() => {
         if (handler) handler();
