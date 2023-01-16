@@ -65,7 +65,7 @@ export const statisticsSvg = [
 // Firebase base Url for storage
 
 export const firebaseBaseUrl =
-  "https://firebasestorage.googleapis.com/v0/b/recipe-app-auth-ba48b.appspot.com/o/";
+  "https://firebasestorage.googleapis.com/v0/b/foody-reciper.appspot.com/o/";
 
 export const impressumData = {
   address: {
